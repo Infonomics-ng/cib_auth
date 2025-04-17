@@ -7,7 +7,6 @@ import AuthService.exceptions.DuplicateException;
 import AuthService.exceptions.InvalidRequestException;
 import AuthService.exceptions.NotFoundException;
 import AuthService.services.UserService;
-import AuthService.services.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

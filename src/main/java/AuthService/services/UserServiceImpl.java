@@ -56,10 +56,12 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private final RoleRepository roleRepository;
 
-//    @Autowired
-//    private final CorporateClient corporateClient;
+    @Autowired
+    private final CorporateClient corporateClient;
 
     public void createUser(PostUserRequest request) throws DuplicateException {
+        var corporate = corporateClient.getCorpByCorpId(request.getCorpId());
+        System.out.println(corporate);
         User existingUser = userRepository.findByUsername(request.getUsername());
         if(existingUser != null){
             String errmsg = String.format("user with the email already exists");
@@ -78,7 +80,7 @@ public class UserServiceImpl implements UserService{
     public AuthorizationResponse registerUser(PostUserRequest user) throws InvalidRequestException {
 //        var corp = corporateClient.getCorpByCorpId(user.getCorpId());
 //        System.out.println(corp);
-        var existingCorporate = corporateRepository.findByCorpId(user.getCorpId());
+        var existingCorporate = corporateClient.getCorpByCorpId(user.getCorpId());
         if (existingCorporate == null) {
             throw new InvalidRequestException("Corporate must exist before a user can be created");
         }
