@@ -78,9 +78,9 @@ public class UserServiceImpl implements UserService{
     }
 
     public AuthorizationResponse registerUser(PostUserRequest user) throws InvalidRequestException {
-//        var corp = corporateClient.getCorpByCorpId(user.getCorpId());
 //        System.out.println(corp);
-        var existingCorporate = corporateClient.getCorpByCorpId(user.getCorpId());
+//        var existingCorporate = corporateClient.getCorpByCorpId(user.getCorpId());
+        var existingCorporate = corporateRepository.findByCorpId(user.getCorpId());
         if (existingCorporate == null) {
             throw new InvalidRequestException("Corporate must exist before a user can be created");
         }

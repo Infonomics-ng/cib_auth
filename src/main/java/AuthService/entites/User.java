@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 
-@Entity
+@Entity(name = "user")
 @Data
 @Getter
 @Setter
