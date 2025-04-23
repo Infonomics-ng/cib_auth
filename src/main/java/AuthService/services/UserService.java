@@ -16,5 +16,5 @@ public interface UserService {
     void createUser(PostUserRequest request) throws DuplicateException;
     UserResponse getUser(Long userId) throws NotFoundException;
     AuthorizationResponse registerUser(PostUserRequest request) throws InvalidRequestException;
-    AuthorizationResponse loginUser(UserLoginRequest request);
+    AuthorizationResponse loginUser(UserLoginRequest request) throws Exception;
 }

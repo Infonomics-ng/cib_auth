@@ -13,4 +13,6 @@ public interface UserMapper {
     User postUserRequestToUser(PostUserRequest request);
 
     UserResponse userToUserResponse(User user);
+    User userResponseToUser(UserResponse user);
+
 }

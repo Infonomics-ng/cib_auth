@@ -8,6 +8,7 @@ import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.crypto.SecretKey;
@@ -19,7 +20,8 @@ import java.util.function.Function;
 @Service
 @RequiredArgsConstructor
 public class AuthService{
-    private final String SECRET_KEY = "/NDRrJ/jzaBe2CoCwW877FSrFs6XdKVjp12JXeqIkhkIzinEhvn8v+aSczkELnegQWWZdZY3/kKE2ZUZiX1Q/eYU82FWm9EHPycZijuOtr0qRRKiMltnH3jYVqMdttnxE/P5/stfSsu5lqUn4QP6U9bJt+TEKDjYbi54urfqJDHySV8NMghntj9PL7GvmMU1+rbxRhj28brrwe916LUgiLCRjwzpu9MSpKLIoORBmCit1RNUe+8ZhdIv3AjzSYT3OV9zwIFJxd+V8+FikrjAPcLtOQWuCC5d//Z1Sfnmp6s8v0Y+XXY1+FjZL0RXHr8mqhbB0SrFMh12qbDS3GHrzws/rz6H0Vjn0B/EAYFLDKk=\n";
+    @Value("${SECRET_KEY}")
+    private String SECRET_KEY;
     public String generateToken(User user){
         String token = Jwts
                 .builder()

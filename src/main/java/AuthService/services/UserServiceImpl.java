@@ -61,7 +61,6 @@ public class UserServiceImpl implements UserService{
 
     public void createUser(PostUserRequest request) throws DuplicateException {
         var corporate = corporateClient.getCorpByCorpId(request.getCorpId());
-        System.out.println(corporate);
         User existingUser = userRepository.findByUsername(request.getUsername());
         if(existingUser != null){
             String errmsg = String.format("user with the email already exists");
@@ -105,12 +104,12 @@ public class UserServiceImpl implements UserService{
                 .globalAccess(user.isGlobalAccess())
                 .build();
         Set<Role> roles = new HashSet<>();
-        for (RoleEnum roleName : user.getUserRoles()) {
-            Role role = roleRepository.findByRoleName(roleName.toString());
-            if (role != null) {
+        for (RoleEnum userRole : user.getUserRoles()) {
+            Role role = roleRepository.findByRoleName(userRole.toString());
+            if (role == null) {
                 Role newRole = Role.builder()
-                        .roleCd("super_admin")
-                        .roleName(roleName.toString())
+                        .roleCd(userRole.toString())
+                        .roleName(userRole.toString())
                         .approvalStatus("APPROVED")
                         .approvedBy("ADMIN")
                         .build();
@@ -125,16 +124,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public AuthorizationResponse loginUser(UserLoginRequest user) {
+    public AuthorizationResponse loginUser(UserLoginRequest user) throws Exception{
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-        User userDtl = userRepository.findByUsernameWithRoles(user.getUsername());
+        var userDtl = userRepository.findByUsername(user.getUsername());
         String token = authService.generateToken(userDtl);
-        if(userDtl != null && userDtl.getUserRoles() != null){
-          System.out.println(userDtl);
-        }
-            var userRoles = List.of("");
         Profile profile = Profile.builder()
-                .userRoles(userRoles)
+                .userRoles(userDtl.getUserRoles()
+                        .stream()
+                        .map(Role::getRoleName)
+                        .collect(Collectors.toList()))
                 .firstName(userDtl.getFirstName())
                 .lastName(userDtl.getLastName())
                 .build();
