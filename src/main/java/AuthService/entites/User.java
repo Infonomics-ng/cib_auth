@@ -1,6 +1,7 @@
 package AuthService.entites;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -14,13 +15,12 @@ import java.util.Set;
 
 
 @Entity(name = "user")
-@Data
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "userRoles")
+//@ToString(exclude = "userRoles")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -109,8 +109,8 @@ public class User implements UserDetails {
         return true;
     }
 
-    @ManyToMany
-    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("users")
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "userId"),
