@@ -56,11 +56,11 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private final RoleRepository roleRepository;
 
-    @Autowired
-    private final CorporateClient corporateClient;
+//    @Autowired
+//    private final CorporateClient corporateClient;
 
     public void createUser(PostUserRequest request) throws DuplicateException {
-        var corporate = corporateClient.getCorpByCorpId(request.getCorpId());
+        //var corporate = corporateClient.getCorpByCorpId(request.getCorpId());
         User existingUser = userRepository.findByUsername(request.getUsername());
         if(existingUser != null){
             String errmsg = String.format("user with the email already exists");

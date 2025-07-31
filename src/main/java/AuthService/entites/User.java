@@ -61,7 +61,8 @@ public class User implements UserDetails {
 
     private String password;
 
-//    private List<RoleEnum> userRoleEnums;
+    private List<RoleEnum> userRoleEnums;
+
     private boolean enableToken;
 
     private boolean viewAccountBalance;
